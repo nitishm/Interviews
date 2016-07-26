@@ -109,8 +109,9 @@ class BTree:
         return 1 + max(self.depth(root.left), self.depth(root.right))
 
     def isBalanced(self, root):
-        if abs(self.depth(root.left) - self.depth(root.right)) > 1 and self.isBalanced(root.left) and self.isBalanced(root.right):
-            return False
+        if root:
+            if abs(self.depth(root.left) - self.depth(root.right)) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right):
+                return False
         return True
 
     def isBalancedOptimalHelper(self, root):
@@ -135,6 +136,13 @@ class BTree:
         else:
             return True
 
+    def rotateRight(self):
+        if None not in (self.root, self.root.left, self.root.right):
+            newRoot = self.root.left
+            self.root.left = newRoot.right
+            newRoot.right = self.root
+            self.root = newRoot
+            
 def BTreeFromSortedArray(arr, t2):
     if len(arr) > 2:
         pivotVal = len(arr)//2
@@ -145,6 +153,7 @@ def BTreeFromSortedArray(arr, t2):
         BTreeFromSortedArray(arr[pivotVal:], t2)
 
     return t2
+
 
 # t1 = BTree()
 # l = [15,3,2,1,66,10,4,9,17,67,13, 54]
@@ -165,7 +174,17 @@ def BTreeFromSortedArray(arr, t2):
 # print t1.isBalancedOptimal(t1.root)
 
 t2 = BTree()
-arr = [i for i in range(1,20)]
+arr = [i for i in range(1,67)]
 
 t2 = BTreeFromSortedArray(arr, t2)
-print t2.isBalanced(t2.root)
+# print t2.depth(t2.root.left)
+# print t2.depth(t2.root.right)
+# print t2.isBalanced(t2.root)
+print t2.root.left.value, t2.root.value, t2.root.right.value
+t2.rotateRight()
+print t2.root.left.value, t2.root.value, t2.root.right.value
+t2.rotateRight()
+print t2.root.left.value, t2.root.value, t2.root.right.value
+t2.rotateRight()
+print t2.root.left.value, t2.root.value, t2.root.right.value
+t2.rotateRight()
