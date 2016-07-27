@@ -33,7 +33,6 @@ class LinkedList:
             index = index + 1
         return op + '$'
 
-
     def add(self, data):
         node = Node(data)
         node.setNext(self.head)

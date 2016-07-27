@@ -1,5 +1,3 @@
-import math
-
 class Node:
     def __init__(self, value, parent = None):
         self.value = value
@@ -59,12 +57,16 @@ class BTree:
             print root.value
             self.inOrder(root.right)
 
+    #Keep going left till you hit the end
     def findMin(self, node):
         if self.root and node:
             while node.left != None:
                 node = node.left
             return node
 
+    #if has right child. Move right and find minimum from right childs left side
+    #if has a parent, then if left child parent is successor else
+    #break link between node and parent, find parents successor and reattach self to parent
     def findSuccessor(self, node):
         succ = None
         if self.root and node:
@@ -83,6 +85,7 @@ class BTree:
     def delete(self, value):
         node = self.findNode(self.root, value)
         if node:
+            #set node to successor and remove it below in one of the conditions
             if None not in (node.left, node.right):
                 succ = self.findSuccessor(node)
                 node.value = succ.value
@@ -114,6 +117,7 @@ class BTree:
                 return False
         return True
 
+    #Do both depth calculation and check for balance at the same time in O(n) time and O(1) space
     def isBalancedOptimalHelper(self, root):
         if root == None:
             return 0
@@ -136,13 +140,15 @@ class BTree:
         else:
             return True
 
+    #Make the new roots right child the old roots left child. Make old root new roots right child
     def rotateRight(self):
         if None not in (self.root, self.root.left, self.root.right):
             newRoot = self.root.left
             self.root.left = newRoot.right
             newRoot.right = self.root
             self.root = newRoot
-            
+
+#Keep splitting the array. Divide and conquer. O(log.n) complexity
 def BTreeFromSortedArray(arr, t2):
     if len(arr) > 2:
         pivotVal = len(arr)//2

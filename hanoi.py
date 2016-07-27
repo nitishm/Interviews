@@ -1,5 +1,7 @@
+#recurse (from source to helper using dest)
+#move one disk from source to dest
+#recurse (from helper to dest using source)
 class Hanoi:
-    
     def __init__(self, size):
         self.towers = [[], [], []]
         self.size = size

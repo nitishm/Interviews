@@ -4,4 +4,4 @@ class heap:
         self.currentSize = 0
 
     def insert(self, key):
-        
+        pass
